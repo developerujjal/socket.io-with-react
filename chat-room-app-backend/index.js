@@ -29,10 +29,19 @@ const io = new Server(expressServer, {
 app.use(express.json())
 app.use(cors(corsOptions));
 
+
+app.get('/', (req, res) => {
+    res.send('This is Socket.io')
+})
+
 io.on('connection', (socket) => {
     console.log('new user join.')
 
-    
+    setTimeout(() => {
+        //custome emit
+        socket.emit('message', 'This is From Server!')
+    }, 3000)
+
     socket.on('disconnect', () => {
         console.log('user disconnected')
     })
